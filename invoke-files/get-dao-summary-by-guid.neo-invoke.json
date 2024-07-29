@@ -1,0 +1,9 @@
+[
+  {
+    "contract": "N3DaoTestContract",
+    "operation": "getDaoSummaryByGuid",
+    "args": [
+      1
+    ]
+  }
+]

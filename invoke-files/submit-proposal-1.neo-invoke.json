@@ -1,0 +1,19 @@
+[
+  {
+    "contract": "N3DaoTestContract",
+    "operation": "submitProposal",
+    "args": [
+      "xqj0m28ed7913zlkioxroqlxwq49h383c3t2xdctgxrw6g9",
+      "Proposal One",
+      "",
+      1,
+      2,
+      3,
+      "0xcf76e28bd0062c4a478ee35561011319f3cfa4d2",
+      4,
+      "0xcf76e28bd0062c4a478ee35561011319f3cfa4d2",
+      "My first proposal",
+      ""
+    ]
+  }
+]

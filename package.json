@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "base64-js": "^1.5.1",
+    "bs58": "^4.0.1",
+    "ieee754": "^1.2.1",
+    "isarray": "^2.0.5",
+    "jsonfile": "^6.1.0",
+    "pizzicato": "^0.6.4",
+    "pizzicato-recorder": "^1.0.3",
+    "safe-buffer": "^5.2.1"
+  }
+}

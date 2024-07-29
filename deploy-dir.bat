@@ -1,0 +1,1 @@
+cd contracts/N3DaoTest/src/bin/sc

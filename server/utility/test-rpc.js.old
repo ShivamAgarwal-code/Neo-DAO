@@ -1,0 +1,80 @@
+// This file contains some simple code to run a few basic
+//  tests against an RPC node.
+
+const {rpc} = require("@cityofzion/neon-js")
+const common_routines = require("../common/common_routines");
+const misc_shared_lib = require('../public/javascripts/misc/misc-shared-lib');
+
+// const rpcAddress = "http://seed1t.neo.org:20332";
+const rpcAddress = common_routines.getEnvironmentVarOrError("URL_NEO_RPC_NODE");
+const scripthash = "0xd2a4cff31913016155e38e474a2c06d08be276cf";
+const method = "decimals";
+const params = {};
+
+const errPrefix = '(test-rpc.js) ';
+
+/**
+ * Make a call to the decimals() method against th GasToken contract
+ * 	on the TestNet.  This serves as basic test of making an RPC call.
+ *
+ * @return {Promise<void>}
+ */
+async function testRpc() {
+	let errPrefix = `(testRpc) `;
+	
+	let bIsError = false;
+	
+	const rpcClient = new rpc.RPCClient(rpcAddress)
+	const newObj = new Object();
+	console.log(errPrefix + `Calling method ${method}() using RPC node URL: ${rpcAddress}...`);
+	
+	const result = await rpcClient.invokeFunction(scripthash, method) // [])
+		.catch(err => {
+		    // Convert the error to a promise rejection.
+		    let errMsg =
+		        errPrefix + misc_shared_lib.conformErrorObjectMsg(err);
+		    
+		    console.error(errMsg + ' - promise');
+		    bIsError = true;
+		});
+	
+	console.log(result);
+	let bExitCode = bIsError ? 1 :0;
+	process.exit(1);
+}
+
+try {
+
+
+	/*
+	let cryptoSymbol_neodao = 'NEODAO';
+	let cryptoSymbol_tfuel = 'TFUEL';
+	
+	getCryptocomparePrice_promise(cryptoSymbol_neodao)
+	.then(result => {
+	    console.info(errPrefix + `Cryptocompare result for symbol(${cryptoSymbol_neodao}: `);
+        console.dir(result, {depth: null, colors: true})
+        
+		return getCryptocomparePrice_promise(cryptoSymbol_tfuel)
+	})
+	.then(result => {
+	    console.info(errPrefix + `Cryptocompare result for symbol(${cryptoSymbol_neodao}: `);
+        console.dir(result, {depth: null, colors: true})
+        process.exit(1);
+	})
+	 */
+
+	testRpc();
+}
+
+catch(err) {
+	// Convert the error to a promise rejection.
+	let errMsg =
+		errPrefix + misc_shared_lib.conformErrorObjectMsg(err);
+	
+	console.error(errMsg + ' - try/catch');
+	process.exit(1);
+}
+
+// const Neon = require("@cityofzion/neon-js");
+// const acct = Neon.create.Account("ALq7AWrhAueN6mJNqk6FHJjnsEoPRytLdW");

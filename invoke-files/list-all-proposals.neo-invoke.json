@@ -1,0 +1,9 @@
+[
+  {
+    "contract": "N3DaoTestContract",
+    "operation": "listAllProposalsForDao",
+    "args": [
+      "xqj0m28ed7913zlkioxroqlxwq49h383c3t2xdctgxrw6g9"
+    ]
+  }
+]

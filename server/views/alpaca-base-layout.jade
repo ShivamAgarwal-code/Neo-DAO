@@ -1,0 +1,247 @@
+// Use this base layout for any page that contains an Alpaca form.
+doctype html
+html
+    head
+        block extra_variables
+
+        // Enable responsive viewport
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+
+        // Le styles
+        link(rel='stylesheet' href="/alpaca-page/lib/bootstrap/dist/css/bootstrap.min.css")
+        link(rel='stylesheet' href="/alpaca-page/lib/bootstrap/dist/css/bootstrap-theme.min.css")
+        link(rel='stylesheet' href="/alpaca-page/assets/themes/dbyll/resources/font-awesome/css/font-awesome.min.css")
+        link(rel='stylesheet' href="/alpaca-page/assets/themes/dbyll/resources/bootstrap.vertical-tabs/bootstrap.vertical-tabs.css")
+        link(rel='stylesheet' href="/alpaca-page/assets/themes/dbyll/resources/syntax/syntax.css")
+        link(rel='stylesheet' href="/alpaca-page/assets/themes/dbyll/css/style.css")
+        link(rel='stylesheet' href="/alpaca-page/css/custom.css")
+
+        // icons
+        link(rel="apple-touch-icon" sizes="57x57" href="/alpaca-page/alpaca-icons/apple-icon-57x57.png")
+        link(rel="apple-touch-icon" sizes="60x60" href="/alpaca-page/alpaca-icons/apple-icon-60x60.png")
+        link(rel="apple-touch-icon" sizes="72x72" href="/alpaca-page/alpaca-icons/apple-icon-72x72.png")
+        link(rel="apple-touch-icon" sizes="76x76" href="/alpaca-page/alpaca-icons/apple-icon-76x76.png")
+        link(rel="apple-touch-icon" sizes="114x114" href="/alpaca-page/alpaca-icons/apple-icon-114x114.png")
+        link(rel="apple-touch-icon" sizes="120x120" href="/alpaca-page/alpaca-icons/apple-icon-120x120.png")
+        link(rel="apple-touch-icon" sizes="144x144" href="/alpaca-page/alpaca-icons/apple-icon-144x144.png")
+        link(rel="apple-touch-icon" sizes="152x152" href="/alpaca-page/alpaca-icons/apple-icon-152x152.png")
+        link(rel="apple-touch-icon" sizes="180x180" href="/alpaca-page/alpaca-icons/apple-icon-180x180.png")
+        // link(rel="manifest" href="/alpaca-page/alpaca-icons/manifest.json")
+
+        // Meta.
+        meta(name="msapplication-TileColor" content="#ffffff")
+        meta(name="msapplication-TileImage" content="/alpaca-icons//ms-icon-144x144.png")
+        meta(name="theme-color" content="#ffffff")
+
+        // jQuery
+        // script(type="text/javascript" src="/alpaca-page/lib/jquery/dist/jquery.min.js")
+        // ROS: Using source file to avoid 404 errors for the map file.
+        //  TODO: Replace this with the minified file.
+        script(type="text/javascript" src="/alpaca-page/lib/jquery/src/jquery-2.1.4.js")
+
+        // Bootstrap
+        script(type="text/javascript" src="/alpaca-page/lib/bootstrap/dist/js/bootstrap.min.js")
+
+        // Handlebars
+        script(type="text/javascript" src="/alpaca-page/lib/handlebars/handlebars.min.js")
+
+        // Alpaca
+        script(type="text/javascript" src="/alpaca-page/lib/alpaca/bootstrap/alpaca.js")
+        link(type="text/css" href="/alpaca-page/lib/alpaca/bootstrap/alpaca.css" rel="stylesheet")
+
+        // jQuery UI Support
+        script(type="text/javascript" src="/alpaca-page/lib/jquery-ui/jquery-ui.js")
+        link(type="text/css" href="/alpaca-page/lib/jquery-ui/themes/cupertino/jquery-ui.min.css" rel="stylesheet")
+
+        // Required for jQuery UI DateTimePicker control
+        script(type="text/javascript" src="/alpaca-page/lib/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js")
+        link(type="text/css" href="/alpaca-page/lib/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css" rel="stylesheet")
+
+        // Required for Text Field masking
+        script(type="text/javascript" src="/alpaca-page/lib/jquery-maskedinput/dist/jquery.maskedinput.min.js")
+
+        // Required for the Editor field (sample code viewing)
+        script(src="/alpaca-page/lib/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8")
+
+        // Beautify (used by EditorField)
+        script(src="/alpaca-page/lib/js-beautify/js/lib/beautify.js" type="text/javascript" charset="utf-8")
+        script(src="/alpaca-page/lib/js-beautify/js/lib/beautify-css.js" type="text/javascript" charset="utf-8")
+        script(src="/alpaca-page/lib/js-beautify/js/lib/beautify-html.js" type="text/javascript" charset="utf-8")
+
+        // typeahead.js
+        script(src="/alpaca-page/lib/typeahead.js/dist/bloodhound.min.js" type="text/javascript")
+        script(src="/alpaca-page/lib/typeahead.js/dist/typeahead.bundle.min.js" type="text/javascript")
+
+        // datatables (for TableField)
+        script(src="/alpaca-page/lib/datatables.net/js/jquery.dataTables.js" type="text/javascript")
+        script(src="/alpaca-page/lib/datatables.net-bs/js/dataTables.bootstrap.js" type="text/javascript")
+        script(src="/alpaca-page/lib/datatables.net-rowreorder/js/dataTables.rowReorder.js" type="text/javascript")
+        link(type="text/css" href="/alpaca-page/lib/datatables.net-bs/css/dataTables.bootstrap.css" rel="stylesheet")
+
+        // ckeditor (for the ckeditor field)
+        script(src="/alpaca-page/lib/ckeditor/ckeditor.js" type="text/javascript")
+
+        // tinymce (for the tinymce field)
+        script(src="/alpaca-page/lib/tinymce/tinymce.js" type="text/javascript")
+
+        // fileupload control (for UploadField)
+        link(rel="stylesheet" type="text/css" href="/alpaca-page/lib/blueimp-file-upload/css/jquery.fileupload.css")
+        link(rel="stylesheet" type="text/css" href="/alpaca-page/lib/blueimp-file-upload/css/jquery.fileupload-ui.css")
+        script(src="/alpaca-page/lib/blueimp-file-upload/js/vendor/jquery.ui.widget.js")
+        script(src="/alpaca-page/lib/blueimp-file-upload/js/jquery.iframe-transport.js")
+        script(src="/alpaca-page/lib/blueimp-file-upload/js/jquery.fileupload.js")
+        script(src="/alpaca-page/lib/blueimp-file-upload/js/jquery.fileupload-process.js")
+        script(src="/alpaca-page/lib/blueimp-file-upload/js/jquery.fileupload-ui.js")
+
+        // handsontable (for GridField)
+        script(src="/alpaca-page/lib/handsontable/dist/jquery.handsontable.full.js")
+        link(rel="stylesheet" media="screen" href="/alpaca-page/lib/handsontable/dist/jquery.handsontable.full.css")
+
+        // bootstrap datetimepicker for date, time and datetime controls
+        script(src="/alpaca-page/lib/moment/min/moment-with-locales.min.js")
+        script(src="/alpaca-page/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js")
+        link(rel="stylesheet" media="screen" href="/alpaca-page/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css")
+
+        // bootstrap-multiselect for time field
+        script(src="/alpaca-page/lib/bootstrap-multiselect/js/bootstrap-multiselect.js")
+        link(rel="stylesheet" media="screen" href="/alpaca-page/lib/bootstrap-multiselect/css/bootstrap-multiselect.css")
+
+        // jQuery Price Format for currency field
+        script(type="text/javascript" src="/alpaca-page/lib/jquery-price-format2/jquery.price_format.min.js")
+
+        // Spectrum plugin for Color picker
+        script(src="/alpaca-page/lib/spectrum/spectrum.js")
+        link(rel="stylesheet" media="screen" href="/alpaca-page/lib/spectrum/spectrum.css")
+
+        // Color Picker for Bootstrap
+        script(src="/alpaca-page/lib/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js")
+        link(rel="stylesheet" media="screen" href="/alpaca-page/lib/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css")
+
+        // Pick-A-Color for Bootstrap
+        script(src="/alpaca-page/lib/tinycolor/dist/tinycolor-min.js")
+        script(src="/alpaca-page/lib/pick-a-color-m/build/1.2.3/js/pick-a-color-1.2.3.min.js")
+        link(rel="stylesheet" media="screen" href="/alpaca-page/lib/pick-a-color-m/build/1.2.3/css/pick-a-color-1.2.3.min.css")
+
+        // bootstrap-tokenfield (for token field)
+        script(src="/alpaca-page/lib/bootstrap-tokenfield/dist/bootstrap-tokenfield.min.js" type="text/javascript")
+        link(rel="stylesheet" media="screen" href="/alpaca-page/lib/bootstrap-tokenfield/dist/css/bootstrap-tokenfield.css")
+
+        // summernote editor
+        script(src="/alpaca-page/lib/summernote/dist/summernote.min.js" type="text/javascript")
+        link(rel="stylesheet" media="screen" href="/alpaca-page/lib/summernote/dist/summernote.css")
+
+        // markdown (for the markdown field)
+        script(src="/alpaca-page/lib/simplemde/dist/simplemde.min.js" type="text/javascript")
+        link(rel="stylesheet" media="screen" href="/alpaca-page/lib/simplemde/dist/simplemde.min.css")
+
+        link(rel='stylesheet', href='/stylesheets/main.css')
+        link(rel='stylesheet', href='/stylesheets/main-styling.css')
+
+
+        // ------------------------ JAVASCRIPT ---------------------
+
+        // --- List widget
+        script(type="text/javascript", src="/javascripts/list.min.js")
+
+        // --- Handlebars templating engine for CLIENT side templating (JADE for serve side templating.)
+        // script(type="text/javascript", src="/javascripts/handlebars.js")
+
+        // JQuery cookie storage helper code.
+        script(type="text/javascript", src="/javascripts/jquery.cookie.js")
+
+        // --- Jquery UI
+        // script(type="text/javascript", src="/javascripts/jquery-ui.js")
+
+        // For use by Google library code (See deps.js).
+        script(type="text/javascript", src="/javascripts/storage.js")
+
+        // What we use for local storage.
+        script(type="text/javascript", src="/javascripts/jstorage.js")
+
+        // Miscellaneous routines.
+        script(type="text/javascript", src="/javascripts/misc/misc-1.js")
+        script(type="text/javascript", src="/javascripts/misc/misc-2.js")
+        script(type="text/javascript", src="/javascripts/misc/misc-ext.js")
+        script(type="text/javascript", src="/javascripts/misc/misc-shared-lib.js")
+        script(type="text/javascript", src="/javascripts/misc/price-shared-lib.js")
+        script(type="text/javascript", src="/javascripts/misc/persistent-fields.js")
+
+        // Global  namespace.
+        script(type="text/javascript", src="/javascripts/global-namespace.js")
+
+        // EZ-Dialog
+        script(type="text/javascript", src="/javascripts/misc/ez-dialog.js")
+
+        // ROS: Our helper code for working with Alpaca forms.
+        script(type="text/javascript", src="/alpaca-page/helpers/alpaca-form-helpers.js")
+
+        // Help Text.
+        script(type="text/javascript", src="/javascripts/help/show-help.js")
+
+        // NeoLine support.
+        script(type="text/javascript", src="/javascripts/neodao-js/neoline-helpers.js")
+
+        // Back-end-server shared API functions.
+        script(type="text/javascript", src="/javascripts/back-end-server/back-end-server-api.js")
+
+        //- Include any additional header javascript files needed by the page being rendered.
+        block extra_javascript
+
+        //- Include any stylesheets needed by the page being rendered.
+        block extra_css
+
+        // Our auto-complete manager module.
+        // script(type="text/javascript", src="/javascripts/autocomplete/autocomplete-manager.js")
+
+        //- NOTE: Do not set the style for page-div here so that the page level views
+        //  that extend from this partial view can make their own CSS/style choices.
+        div(id="page-div")
+
+        // Common page header.
+        div(id="header-div", class="container")
+            a(href="/main", title="Return to the Main directory page.")
+            //- img(src="/images/logo.png", alt="Logo", class="logo", style="width: 50px; height: 50px")
+            div(id="page-title-div")
+                span(style="font-size: x-large") #{title}
+            //- This div allows each page to add content to the title line.
+            div(id="put-sub-page-content-here-div")
+                block sub-page-title-content
+
+    body
+        div(id="mainDiv", class="container container-fluid")
+            block content
+
+        // Include the Handlebar templates for the various help screens.
+        include show-help
+
+        // ------------------------------------ HANDLEBARS TEMPLATES --------------------------------------
+
+        // ------------------ DEFAULT EZDialog SESSION ------------------------------
+
+        // >>>>> This template renders the DEFAULT implementation for an EZDialog
+        //  session where the HTML provided by the consumer of that object did NOT
+        //  provide a host table and associated CANCEL/OK buttons.
+        script(id="default-ez-dialog-template", type="text/x-handlebars-template")
+            // The table is used to separate the bespoke HTML content and the
+            //  button row.
+            table(id="ez-dialog-table", width="100%")
+                tbody
+                    // Bespoke HTML content.
+                    tr
+                        td(class="ez-dialog")
+                            // The actual HTML bespoke content provided by the
+                            //  consume of an EZDialog object goes here.
+                            div(id='default-ez-dialog-bespoke-html-div') {{{bespokeHtml}}}
+                    // Button row.
+                    tr
+                        td(class="center ez-dialog")
+                            // CANCEL button.  The "cancel-button" class tells the EZDialog object
+                            //  that generates HTML content using this template, which button is
+                            //  the CANCEL button.
+                            button(id="cancel-button" class="my-btn btn button-cancel btn-large cancel-button")
+                                i(class="icon-white icon-remove glyphicon-remove") {{cancelButtonTitle}}
+                            // OK button.  The "ok-button" class tells the EZDialog object
+                            //  that generates HTML content using this template, which button is
+                            //  the OK button.
+                            button(id="do-dialog-button" class="my-btn btn button-ok btn-large ok-button")
+                                i(class="icon-white icon-ok glyphicon-ok") {{okButtonTitle}}

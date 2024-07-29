@@ -1,0 +1,17 @@
+[
+  {
+    "contract": "N3DaoTestContract",
+    "operation": "submitProposal",
+    "args": [
+      "@bob",
+      10,
+                  {
+              "type": "Array",
+              "value": [
+                "SubmitProposal",
+ "{\"dao_guid\":1,\"proposal_guid\":\"hexslz5oabh6vv0neansqvpfa1l77onyvodo1f5smkbj80wi\",\"applicant\":\"\",\"shares_requested\":3,\"loot_requested\":0,\"tribute_offered\":0,\"tribute_token\":\"0xd2a4cff31913016155e38e474a2c06d08be276cf\",\"payment_requested\":0,\"payment_token\":\"0xd2a4cff31913016155e38e474a2c06d08be276cf\",\"details\":\"(Put proposal details here)\",\"neofs_compound_id_pairs\":\"ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:5eYSSb9NQ3vpAiqbymTDG6dAWbovTXr7eqechyAfQKgs, ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:CcEAWX8KzEt4ET2TSP6GeaiefVAmfR2sfhNizEJX12PS, ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:3U3bCy6QTHnGoMfuHk6XHKqZkyi6MZ4DdZdKDnVx5T4g, ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:D8gEV6tcVXg86cSoTchpUwcMZMty7WgA81j6kChZDsPH, ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:6McS2P6oFoTLGWNBVUV9t8LH1JDUeFjdhaQCmYk8yD3v, ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:2knH4cnxAfVJcwf6tCkRCgAMxWdJv5gWMcgcneJvWSMS, ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:FJrfYuZSHmcKp4qu6Rh8mPeNb9P5CD2JA4gtrBKEhg2S, ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:C3DPRsCxoCcYt7SetKP9Z38eA8Qxm7AcyVRoYRWtYxt8, ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:BwP91NReA56QHmt8MrUntdwrwzur8U1BNgaK5oYKhYqV, ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:2x1Lec8Qn6JQGfEmYF2NWmyJWcLno6k1uoZMLeHS44ic, ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:CWfaKeBjnRVuVhYhvV8TkoGi5x2iNMHMugC9Mdvai3oj, ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:AYYFBnecUfzPQjaEzKN5Ax5PpiLdnyRTdDexv1o8iiEm, ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:73LtTct2XEmZcTo8e2owPTLdq1iWtHFrBSFpWZomibM7, ERdG98GLAWtTGRNkrbLP4nbct8WCuGZ5Grr7E8sKN9DP:ACpo2Rg6Bpv7VnnSWVQPpq6XBT5p34QuZNo8hdYZyrBV\"}"
+              ]
+            }
+    ]
+  }
+]

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup>
+        <Projects Include="src/N3DaoTestContract.csproj" />
+        <!-- ROS: The build process for some reason defaults to the TESTS directory, which we don't want -->
+        <!-- <Projects Include="test/N3DaoTestContractTests.csproj" /> -->
+    </ItemGroup>
+    <Target Name="build">
+        <MSBuild Projects="@(Projects)" Targets="build"/>
+    </Target>
+    <Target Name="restore">
+        <MSBuild Projects="@(Projects)" Targets="restore"/>
+    </Target>
+    <Target Name="VSTest">
+        <MSBuild Projects="@(Projects)" Targets="VSTest"/>
+    </Target>
+</Project>

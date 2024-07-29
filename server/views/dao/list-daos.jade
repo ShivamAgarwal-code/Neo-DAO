@@ -1,0 +1,81 @@
+extends ../alpaca-base-layout
+
+block extra_variables
+    -var titleVar = "List DAOs"
+
+//- Include any stylesheets needed by the page being rendered.
+block extra_css
+
+    // Additional CSS required for jTable.
+    link(rel="stylesheet", href="/stylesheets/normalize/normalize.css")
+    // jTable CSS for the jQuery UI themes.
+    link(rel="stylesheet", href="/stylesheets/jqueryui/themes/jqueryui/jtable_jqueryui.css")
+    // JqueryUI ui-darkness theme.
+    link(rel="stylesheet", href="/stylesheets/jqueryui/themes/ui-darkness/jquery-ui.css")
+    // CSS for jTable highlighting.
+    link(rel='stylesheet', href='/stylesheets/jtable/jtable-highlight.css')
+
+//- Include any additional header javascript files needed by the page being rendered.
+block extra_javascript
+
+    script(type="text/javascript" src="/javascripts/jtable/jquery.jtable.js")
+    script(type="text/javascript" src="/javascripts/jtable/jtable-support-client-side.js")
+
+    script(type="text/javascript" src="/javascripts/objects/cryptocurrency-list.js")
+    script(type="text/javascript" src="/javascripts/page-support/list-daos-page-support.js")
+    script(type="text/javascript" src="/javascripts/select2/js/select2.full.min.js")
+
+    // Auto-clean textarea page elements marked with the "auto-clean-text" class.
+    // script(type="text/javascript" src="/javascripts/autoclean/autoclean.js")
+
+    // Our auto-complete manager module.
+    // script(type="text/javascript", src="/javascripts/autocomplete/autocomplete-manager.js")
+
+block content
+
+    div(class="")
+        // Navigation links.
+        include nav-links
+
+    div(id="top-level-div" class="padded-content-container")
+        div(class="padded-content-container")
+            // This is the DIV that contains the table we use for entering data.
+            table(id="main-table")
+                tbody
+                    // ROW: Select cryptocurrency symbol.
+                    tr(class="hidden-row")
+                        td(class="field-label")
+                            span Default DAO Token
+                        td(id="asset-symbol-td")
+                            // This is select box that lets the user select the desired
+                                cryptocurrency goes.  It will be filled in by select2.
+                            select(id="crypto-symbol-select2-div" class="crypto-symbol-select2")
+                    // ROW: Latest price quote.
+                    tr(class="hidden-row")
+                        td(class="field-label")
+                            span Current Price
+                        td(id="current-asset-price-td")
+                            span(class="current-asset-price") (waiting...)
+                    tr
+                        // Spacer.
+                        td(class='spacer-td' colspan=2)
+                            hr
+                    tr
+                        td
+                            div
+                                img(class="logo-1" src="/images/neo/neodao-frog-with-pipe-resized-1.png" alt="NeoDao Frog")
+                                span(class="neodao-page-header") List of all DAOs
+                    // Spacer.
+                    td(class='spacer-td' colspan=2)
+                        hr
+                    tr
+                        td
+                            div(class="simple-list" id="daos-list-div-id")
+
+
+    // List DAO Handlebars template..
+    script(id="list-dao-handlebars-template", type="text/x-handlebars-template")
+        a(class="dao-details-link" href="{{daoDetailsUrl}}")
+            span(class="field-label") ID: {{id}}
+            span(class="field-value") {{displayName}}
+            // span Processing reward {{processingReward}}

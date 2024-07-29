@@ -1,0 +1,17 @@
+[
+  {
+    "contract": "N3DaoTestContract",
+    "operation": "submitProposal",
+    "args": [
+      "@bob",
+      8,
+                  {
+                    "type": "Array",
+                    "value": [
+                      "SubmitProposal",
+                      "{\"dao_guid\":1,\"proposal_guid\":\"FAKE PROPOSAL GUID 2\",\"applicant\":\"\",\"shares_requested\":1,\"loot_requested\":2,\"tribute_offered\":3,\"tribute_token\":\"0xd2a4cff31913016155e38e474a2c06d08be276cf\",\"payment_requested\":0,\"payment_token\":\"0xd2a4cff31913016155e38e474a2c06d08be276cf\",\"details\":\"Amazing proposal\",\"neofs_compound_id_pairs\":\"\"}"
+                    ]
+                  }
+    ]
+  }
+]

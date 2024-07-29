@@ -1,0 +1,52 @@
+// This file contains the views for the various simple help screens in this dApp.
+//  Include this file in any JADE layout where you want to support popup dialogs
+//  and help text displays.
+
+// This DIV will be shown whenever a floating popup needs to be shown.
+div(id="floating-popup-div" class="content-container popup hide-me")
+    // The title row.
+    div(class="floating-popup-title-div")
+        h2(id="floating-popup-title-h2" class="popup-title")
+    // The BODY of the floating popup dialog.
+    div(id="floating-popup-body-div" class="content-container")
+
+// This DIV will be shown whenever a help popup needs to be shown.
+div(id="help-popup-div" class="content-container popup hide-me help-popup")
+    // The title row.
+    div(class="floating-popup-title-div")
+        h2(id="help-popup-title-h2" class="popup-title")
+    // The BODY of the help popup dialog.
+    div(id="help-popup-body-div" class="content-container")
+
+// ------------------------------------ HANDLEBARS TEMPLATES --------------------------------------
+
+// Create DAO.
+script(id="create-dao-mini-template", type="text/x-handlebars-template")
+    p(class="section-body")
+        span(class="help-field-label") NEODAO TRANSACTION FEE:
+        span(class="help-text") NOTE: All transactions
+            | will have a Neodao transaction fee of {{systemTransactionFeePercentage}}
+            | percent applied to them.
+
+    p(class="section-body")
+        span(class="help-text")  If you are satisfied with your DAO settings,
+            | clicking the OK button to create your new DAO.  Clicking the
+            | OK button indicates your acceptance of this information <i>and</i>
+            | also that you accept fully the Neodao site <b>Terms of Use</b> and
+            | <b>Privacy Policy</b>.
+
+// Instruct user to select an account from NeoLine.
+script(id="pick-address-from-neoline-template", type="text/x-handlebars-template")
+    p(class="section-sub-header") Select Account
+    p(class="section-body")
+        | Please choose the account that you want to see.  Press OK to activate NeoLine now.
+
+// Show this to the user if they cancel the NeoLine account selection
+//  process from the Dashboard.
+script(id="pick-address-from-neoline-cancelled-template", type="text/x-handlebars-template")
+    p(class="section-sub-header") Information
+    p(class="section-body")
+        | You cancelled the account selection step.  You will not
+        |  see any open option contract positions on this page
+        |  until you complete that step.  Refresh this page in
+        |  your browser if you want to try again.

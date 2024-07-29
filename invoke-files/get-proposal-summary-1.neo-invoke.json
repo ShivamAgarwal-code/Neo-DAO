@@ -1,0 +1,10 @@
+[
+  {
+    "contract": "N3DaoTestContract",
+    "operation": "getProposalSummary",
+    "args": [
+      1,
+      "hexslz5oabh6vv0neansqvpfa1l77onyvodo1f5smkbj80wi"
+    ]
+  }
+]

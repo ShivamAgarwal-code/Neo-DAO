@@ -1,0 +1,28 @@
+# Transfer some funds to our test wallets.
+transfer 10000 gas genesis owner
+transfer 10000 gas genesis alice
+transfer 10000 gas genesis bob
+# Deploy the HyperNFT smart contract.
+contract deploy ./bin/sc/N3DaoTestContract.nef owner
+# Create a checkpoint.
+# checkpoint create ./checkpoints/dao-test-contract-deployed -f
+checkpoint create ./checkpoints/n3-dao-test-contract-deployed -f
+# Add a DAO.
+contract invoke ../../../invoke-files/create-dao-actual.neo-invoke.json bob
+# Create a checkpoint.
+checkpoint create ./checkpoints/one-dao-added -f
+# Add one proposal.
+#contract invoke ../../../invoke-files/submit-proposal-1.neo-invoke.json bob
+# Add one proposal with PARAMS.
+contract invoke ../../../invoke-files/submit-proposal-1-PARAMS.neo-invoke.json bob
+# Create a checkpoint.
+checkpoint create ./checkpoints/one-proposal-added -f
+# Add another proposal.
+# contract invoke ../../../invoke-files/submit-proposal-2.neo-invoke.json bob
+# Add another proposal with PARAMS.
+contract invoke ../../../invoke-files/submit-proposal-2-PARAMS.neo-invoke.json bob
+# Create a checkpoint.
+checkpoint create ./checkpoints/two-proposals-added -f
+# Have Bob mint an NFT.
+# contract invoke ./invoke-files/mint-nft.neo-invoke.json bob
+# Done.

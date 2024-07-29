@@ -1,0 +1,339 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: linear-gradient(7deg, darkolivegreen, transparent);
+}
+
+a {
+  color: #00B7FF;
+}
+
+#page-title-div {
+  color: antiquewhite;
+}
+
+button.my-btn {
+    margin: 5px;
+}
+
+#activeQuizDiv {
+    background: aliceblue;
+}
+
+/* Hide inactive floating form div elements */
+div.hide-float-form-div {
+    display: none;
+    position: absolute;
+    z-index: auto;
+}
+
+/* Show active floating form div elements */
+div.show-float-form-div {
+    left: 30px;
+    top: 100px;
+    display: block;
+    position: absolute;
+    margin: 5px 10px 5px 10px;
+    padding: 5px 10px 5px 10px;
+    z-index: 99;
+    background-color: #231d2b;
+    font-size: small;
+}
+
+textarea.text-entry {
+    color: black;
+}
+
+div.padded-content-container {
+    padding-bottom: 20px;
+}
+
+span.quiz_name{
+    padding: 10px;
+    font-weight: bold;
+    color: orange;
+}
+
+div.site-container {
+    width: 800px;
+}
+
+nav {
+    background-color: darkgreen;
+    margin: 15px;
+}
+
+a.nav-link {
+    padding: 10px;
+}
+
+#activeQuizDiv {
+    background-color: #201913;
+}
+
+h1,h2,h3,h4.high-contrast {
+    color: white;
+}
+
+#quiz-picker-div {
+    min-height: 200px;
+}
+
+div.padded-children {
+    margin: 10px 15px 15px 15px;
+}
+
+label.my-project-label {
+    color: dodgerblue;
+    margin: 5px;
+    min-width: 200px;
+}
+
+textarea.my-textarea {
+    min-width: 400px;
+    line-height: 0.9;
+    margin: 4px;
+}
+
+input.my-input {
+    min-width: 400px;
+    line-height: 0.9;
+    margin: 4px;
+}
+
+textarea.my-big-textarea {
+    min-width: 600px;
+    min-height: 400px;
+}
+
+/* Force the text in the element to upper case. */
+.uppercase-only {
+    text-transform: uppercase;
+}
+
+/* Force the text in the element to lower case. */
+.lowercase-only {
+    text-transform: lowercase;
+}
+
+/* The style for the Question field formatted by jTable when editing a quiz item.
+#Edit-question {
+    min-height: 130px;
+}
+ */
+
+/* We want wide dialogues for the ui-dialog class since we are working on a desktop with the quiz editor. */
+.ui-dialog {
+    min-width: 780px;
+}
+
+/* Same reason as above, but for the child textarea elements. */
+textarea {
+    min-width: 780px !important;
+    min-height: 100px !important;
+}
+
+input.semantic-meaning-label {
+    min-width: 480px;
+}
+
+/* Override the color for the jQuery UI menu items.  Those are the elements that appear when an auto-complete
+    drop-down list appears.
+ */
+div.ui-menu-item-wrapper {
+    color: orange;
+}
+
+/* Make the INPUT elements for jTable fields service by jQuery UI auto-complete code bigger. */
+input.ui-autocomplete-input {
+    min-width: 780px;
+}
+
+/* Larger width for concrete goal tag input boxes. */
+input.concrete-goal-input {
+    min-width: 400px;
+}
+
+/* For a narrow column in a table. */
+td.mini-column {
+    width: 10%;
+}
+
+p.extra-padding {
+    padding: 10px;
+}
+
+/*
+table.jtable {
+    table-layout: fixed !important;
+}
+*/
+
+span.current-asset-price {
+    margin: 10px;
+}
+
+.crypto-symbol-select2 {
+    margin: 5px;
+}
+
+.label-radio-button {
+    margin-right: 5px;
+}
+
+.input-radio-button {
+    margin-right: 10px !important;
+}
+
+.field-label {
+    color: white;
+}
+
+.spacer {
+    min-height: 30px;
+}
+
+.spacer-td {
+    min-height: 30px;
+}
+
+.section-label {
+    color: mediumspringgreen;
+}
+
+/* The default color for error messages is grey.  Change it. */
+.alpaca-message-custom {
+    color: red;
+}
+
+span.field-label {
+    /* Width doesn't work for spans without this display mode. */
+    display: inline-block;
+    width: 100px;
+    color: yellow;
+}
+
+span.field-value {
+    /* Width doesn't work for spans without this display mode. */
+    display: inline-block;
+    color: lightskyblue;
+}
+
+/* Make a TD element vertically aligned with the TOP and half
+    the width of the row.
+ */
+td.half-top {
+    width: 50%;
+    vertical-align: top;
+    padding: 10px;
+}
+
+/* Border around list item */
+.borderlist {
+    list-style-position:inside;
+    border: 1px solid aliceblue;
+    padding: 10px;
+}
+
+tr.hidden-row {
+    display: none;
+}
+
+.single-line-header-above {
+    color: #00a300;
+    margin-right: 10px;
+}
+
+span.single-line-field-label {
+    color: yellow;
+    margin-right: 10px;
+}
+
+span.single-line-field-value {
+    color: lightskyblue;
+    margin-right: 10px;
+}
+
+span.id-field-label {
+    margin-left: 10px;
+    /* font-style: italic; */
+    color: darkorange;
+}
+
+span.id-field-value {
+    margin-left: 10px;
+    /* font-style: bold; */
+}
+
+div#proposals-list-for-dao {
+    padding: 15px;
+}
+
+div.enlarge-header {
+    margin-bottom: 15px;
+}
+
+img.logo-1 {
+    width: 100px;
+    margin-right: 30px;
+    margin-left: 10px;
+}
+
+img.frog-logo-1 {
+    width: 200px;
+    margin-right: 30px;
+    margin-left: 10px;
+}
+
+td.spacer {
+    height: 25px;
+}
+
+#proposal-details-main-table {
+    width: 800px;
+}
+
+td.primary-column-60 {
+    width: 70%;
+}
+
+#primary-column-60 {
+    width: 460px;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+#execute-proposal-operation-btn {
+    margin-left: 52px;
+}
+
+#create-proposal-btn {
+    margin-left: 20px;
+}
+
+.neodao-button {
+    background: darkgreen;
+    color: lavenderblush;
+}
+
+.margin-left-indent-1 {
+    margin-left: 42px;
+}
+
+#top-level-div {
+    padding-left: 14px;
+}
+
+#main-table {
+    min-width: 800px;
+}
+
+.neodao-page-header {
+    font-size: x-large;
+    color: darkorange;
+}
+
+.unpadded-list {
+    padding: 0px;
+}

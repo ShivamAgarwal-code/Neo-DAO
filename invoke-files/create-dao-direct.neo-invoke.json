@@ -1,0 +1,16 @@
+[
+    {
+        "contract": "N3DaoTestContract",
+        "operation": "createDao",
+        "args": [
+            "@bob",
+            10000000000000,
+            {
+                "type": "Array",
+                "value": [
+                    "CreateDao",
+"{\"array_summoner_addresses\":[\"@user_account_address\"],\"approved_token_hashes\":[\"0xd2a4cff31913016155e38e474a2c06d08be276cf\",\"0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5\"],\"dilution_bound\":3,\"display_name\":\"da\",\"grace_period_length\":35,\"dao_guid\":\"7nwid6hb8tmio2bx8w473zxf9gmozlp6kgw3srlrd4xze8ro\",\"membership_fee\":0,\"minimum_summoner_shares\":0,\"period_duration\":17280,\"processing_reward\":3,\"proposal_deposit\":10,\"summoning_time\":1651490824941,\"array_summoner_shares\":[0],\"voting_period_length\":35}"
+            }
+        ]
+    }
+]

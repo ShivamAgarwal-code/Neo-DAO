@@ -1,0 +1,19 @@
+[
+    {
+        "contract": "GasToken",
+        "operation": "transfer",
+        "args": [
+            "@bob",
+            "0x68a09646c44b897f349cc4cfbfdf4ec8cfc8f90a",
+            3,
+            {
+              "type": "Array",
+              "value": [
+                "CreateDao",
+                "{\"array_summoner_addresses\":[\"@user_account_address\"],\"approved_token_hashes\":[\"0xd2a4cff31913016155e38e474a2c06d08be276cf\",\"0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5\"],\"deposit_token\":\"0xd2a4cff31913016155e38e474a2c06d08be276cf\",\"dilution_bound\":3,\"display_name\":\"aaa\",\"grace_period_length\":35,\"dao_guid\":\"xqj0m28ed7913zlkioxroqlxwq49h383c3t2xdctgxrw6g9\",\"membership_fee\":0,\"minimum_summoner_shares\":0,\"period_duration\":17280,\"processing_reward\":3,\"proposal_deposit\":10,\"summoning_time\":1651521972166,\"array_summoner_shares\":[0],\"voting_period_length\":35}"
+              ]
+            }
+            
+          ]
+    }
+]

@@ -1,0 +1,500 @@
+// This file contains various utility methods that are helpful when using the
+//	neon-js package.
+
+
+const {v4: uuidV4} = require('uuid');
+const neon_js = require("@cityofzion/neon-js")
+
+const common_routines = require('../common/common_routines');
+const misc_shared_lib = require('../public/javascripts/misc/misc-shared-lib');
+
+// BigInteger values from the smart contract are a real number value
+//	multiplied by 10^8 power (8 decimal points).  This value can
+//  be used to convert back and forth between BigInteger values
+//	and real numbers.
+const g_BigIntegerMultVal = Math.pow(10, 8);
+
+// Regular expression when used with the toString() method on a number will
+//  limit the number to two decimal places without rounding or truncating
+//  the number.
+const REG_EXP_LIMIT_TWO_DECIMAL_PLACES = /^-?\d+(?:\.\d{0,2})?/;
+
+/**
+ * Given a number, return a number that is limited to at most two
+ * 	decimal placed.
+ *
+ * @param {Number} numVal - The number to modify.
+ *
+ * @return {*}
+ */
+function limitToTwoDecimalPlaces(numVal) {
+	let errPrefix = "(limitToTwoDecimalPlaces) ";
+	
+	if (typeof numVal !== 'number')
+		throw new Error(errPrefix + `The value in the numVal parameter is not a number.`);
+		
+	const strRetVal = numVal.toString().match(REG_EXP_LIMIT_TWO_DECIMAL_PLACES)[0];
+	
+	const retVal = parseFloat(strRetVal);
+	
+	if (isNaN(retVal) || typeof retVal !== 'number')
+		throw new Error(errPrefix + `The resulting value was no longer a number: ${retVal}.`);
+		
+	return retVal;
+}
+
+/**
+ * This object stores the "type" and "value" fields for an RPC call
+ * 	parameter.
+ *
+ * @param {String} paramType - One of the valid NEO parameter types.
+ * @param {*} paramValue - The parameter value.
+ *
+ * @constructor
+ */
+function NeoRpcParameter(paramType, paramValue) {
+	const self = this;
+	let methodName = self.constructor.name + '::' + `constructor`;
+	let errPrefix = '(' + methodName + ') ';
+	
+	if (misc_shared_lib.isEmptySafeString(paramType))
+		throw new Error(errPrefix + `The paramType parameter is empty.`);
+		
+	if (!paramValue)
+		throw new Error(errPrefix + `The paramValue parameter is invalid.`);
+		
+	/** @property {string} - A randomly generated unique ID for this object. */
+	this.id = uuidV4();
+	
+	/** @property {Date} - The date/time this object was created. */
+	this.dtCreated = Date.now();
+	
+	/** @property {String} - One of the valid NEO parameter types. */
+	this.type = paramType;
+	
+	/** @property {*} - The parameter value. */
+	this.value = paramValue;
+}
+
+/**
+ * This helper function validates an array of parameter values.
+ * 	It will thrown exception if any of the elements are not
+ * 		of type NeoRpcParameter.  An empty array is OK, but
+ * 		NULL and the "undefined" type are not accepted.
+ */
+NeoRpcParameter.validateParamArray = function(aryParams) {
+	let errPrefix = `(NeoRpcParameter.validateParamArray) `;
+	
+	if (!Array.isArray(aryParams))
+		throw new Error(errPrefix + `The aryParams parameter value is not an array.`);
+	
+	for (let ndx = 0; ndx < aryParams.length; ndx++)
+	{
+		if (!(aryParams[ndx] instanceof NeoRpcParameter))
+			throw new Error(errPrefix + `The element at index(${ndx}) is not a NeoRpcParameter object.`);
+	}
+}
+
+/**
+ * We create an object to provide a namespace for the static methods.
+ *
+ * @constructor
+ */
+function CommonNeonJS() {
+	const self = this;
+	let methodName = self.constructor.name + '::' + `constructor`;
+	let errPrefix = '(' + methodName + ') ';
+	
+	/** @property {string} - A randomly generated unique ID for this object. */
+	this.id = uuidV4();
+	
+	/** @property {Date} - The date/time this object was created. */
+	this.dtCreated = Date.now();
+	
+}
+
+/**
+ * Decodes a given string in Base64 format back to a UTF-8 string.
+ *
+ * @param {String} strBase64 - A string encoded in Base64 format.
+ *
+ * @return {string}
+ */
+CommonNeonJS.decodeBase64Str = function(strBase64) {
+	let errPrefix = `(CommonNeonJS.decodeBase64Str) `;
+	
+	if (misc_shared_lib.isEmptySafeString(strBase64))
+		throw new Error(errPrefix + `The strBase64 parameter is empty or is invalid.`);
+		
+	return new Buffer(strBase64, 'base64').toString('utf-8');
+}
+
+/**
+ * Get the "value" field content from a ByteString holder object,
+ * 	one of the types found in a NeonJS StackItem object, but do
+ * 	integrity checks on the ByteString object along the way.
+ *
+ * @param {Object} byteStringObj - A plain JSON object that
+ * 	is a NeonJS StackItem object.
+ *
+ * @return {String} - Returns the contents of the object's
+ * 	"value" field.
+ */
+CommonNeonJS.getStringValueFromByteStringObj = function(byteStringObj) {
+	const errPrefix = `(CommonNeonJS.getStringValueFromByteStringObj) `;
+	
+	// Validate the parameter values.
+
+	// >>>>> TYPE	
+	if (!misc_shared_lib.isNonNullObjectAndNotArray(byteStringObj))
+		throw new Error(errPrefix + `The byteStringObj is not a valid object.`);
+		
+	if (!("type" in byteStringObj))
+		throw new Error(errPrefix + `The byteStringObj parameter does not have a "type" field.`);
+		 	
+	// The type must be "ByteString".
+	if (byteStringObj.type !== "ByteString")
+		throw new Error(errPrefix + `The StackItem type found is not "ByteString".`);
+		 	
+	const theType = byteStringObj.type;
+	
+	// >>>>> VALUE	
+	if (typeof byteStringObj.value !== 'string')
+		throw new Error(errPrefix + `The "value" field in the byteStringObj.value parameter is not a string.`);
+		
+	if (!("value" in byteStringObj))
+		throw new Error(errPrefix + `The byteStringObj parameter does not have a "value" field.`);
+		 	
+	if (typeof byteStringObj.value !== 'string')
+		throw new Error(errPrefix + `The "value" field in the byteStringObj.value parameter is not a string.`);
+		
+	const theStr = byteStringObj.value;
+	
+	// Decode the encode string to a plain sring.
+	return CommonNeonJS.decodeBase64Str(theStr);
+}
+
+/**
+ * Get a single element from the "stack" property inside of a
+ * 	Neon JS result object.
+ *
+ * @param {Object} neonJsResultObj - A NeonJS result object, generated
+ * 	from a NeonJS method call like invokeFunction().
+ * @param {Number} ndx - The array element of the desired "stack" array
+ * 	item to retrieve.
+ *
+ * @return {*} - Returns the desired element from the "stack" array
+ * 	inside a NeonJS result object.
+ */
+CommonNeonJS.getStackItemFromResult = function(neonJsResultObj, ndx) {
+	let errPrefix = `(CommonNeonJS.getStackItemFromResult) `;
+	
+	// Validate the parameter values.
+	
+	if (!misc_shared_lib.isNonNullObjectAndNotArray(neonJsResultObj))
+		throw new Error(errPrefix + `The neonJsResultObj is not a valid object.`);
+	
+	if (typeof ndx !== 'number')
+		throw new Error(errPrefix + `The value in the ndx parameter is not number.`);
+
+	if (ndx < 0)
+		throw new Error(errPrefix + `The ndx parameter is negative.`);
+		
+	if (!("stack" in neonJsResultObj))
+		throw new Error(errPrefix + `The neonJsResultObj object is missing the "stack" property.`);
+		
+	if (!Array.isArray(neonJsResultObj.stack))
+		throw new Error(errPrefix + `The "stack" property in the neonJsResultObj object is not an array.`);
+		
+	if (ndx >= neonJsResultObj.stack.length)
+		throw new Error(errPrefix + `The ndx parameter value(${ndx}) exceeds the bounds of the "stack" array.`);
+		 	
+	// Return the desired stack element.
+	return neonJsResultObj.stack[ndx];
+}
+
+/**
+ * Get a string element from a Neon JS result object.
+ *
+ * @param {Object} neonJsResultObj - A NeonJS result object, generated
+ * 	from a NeonJS method call like invokeFunction().
+ * @param {Number} ndx - The array element that should contain
+ * 	the desired string.
+ *
+ * @return {*} - Returns the desired string from the "stack" array
+ * 	inside a NeonJS result object.
+ */
+CommonNeonJS.getStringItemFromResult = function(neonJsResultObj, ndx) {
+	let errPrefix = `(CommonNeonJS.getStackItemFromResult) `;
+	
+	let elem = CommonNeonJS.getStackItemFromResult(neonJsResultObj, ndx);
+	
+	if (elem === null || typeof elem === 'undefined')
+		throw new Error(errPrefix + `The element returned from the getStackItemFromResult() call is NULL or undefined.`);
+		
+	// Now extract the ByteString value as a plain string.
+	let theStrValue = CommonNeonJS.getStringValueFromByteStringObj(elem);
+	
+	if (misc_shared_lib.isEmptySafeString(theStrValue))
+		throw new Error(errPrefix + `The theStrValue from a call to getStringValueFromByteStringObj() is empty or invalid.`);
+	
+	return theStrValue;
+}
+
+/**
+ * Build a NEO smart contract parameter object
+ *
+ * @param {String} theParamType - The type of the parameter.
+ * @param {*} theParamValue - The parameter value.
+ *
+ * @return {Object} - Returns an object with a type and value
+ * 	field as per the NeonJS API requirements.
+ */
+CommonNeonJS.buildScParam = function(theParamType, theParamValue) {
+	let errPrefix = `(CommonNeonJS.buildScParam) `;
+	
+	if (misc_shared_lib.isEmptySafeString(theParamType))
+		throw new Error(errPrefix + `The theParamType parameter is invalid.`);
+
+	if (misc_shared_lib.isEmptySafeString(theParamValue))
+		throw new Error(errPrefix + `The theParamValue parameter is invalid.`);
+		
+	return { type: theParamType, value: theParamValue };
+}
+
+/**
+ * Build a NEO smart contract parameter object of type string.
+ *
+ * @param {String} theParamValue - The parameter value.
+ *
+ * @return {Object} - Returns an object of type string with the value
+ * 	field set to the given value.
+ */
+CommonNeonJS.buildScParam_string = function(theParamValue) {
+	let errPrefix = `(CommonNeonJS.buildScParam_string) `;
+	
+	if (typeof theParamValue !== 'string')
+		throw new Error(errPrefix + `The value in the theParamValue parameter is not a string.`);
+		
+	if (misc_shared_lib.isEmptySafeString(theParamValue))
+		throw new Error(errPrefix + `The theParamValue parameter is empty.`);
+		
+	// return CommonNeonJS.buildScParam('String', theParamValue);
+	
+	return new NeoRpcParameter('String', theParamValue);
+}
+
+/**
+ * Given the result object from a smart contract method tha
+ * 	returns a Map of objects, return the array of objects
+ * 	embedded within it.
+ *
+ * @param {Object} rpcResultObj - The result object from making
+ * 	an RPC call to a NEO RPC node.
+ *
+ * @return {Array<Object>} - Returns the array of objects
+ * 	contained within the map embedded in the RPC result object.
+ */
+CommonNeonJS.extractMapContentsFromRpcResult = function(rpcResultObj) {
+	let errPrefix = `(CommonNeonJS.extractMapContentsFromRpcResult) `;
+	
+	const rawObj = CommonNeonJS.getStackItemFromResult(rpcResultObj, 0);
+	
+	if (!rawObj)
+		throw new Error(errPrefix + `The raw object returned by getStackItemFromResult() is invalid.`);
+	
+	// Validate it.
+	CommonNeonJS.isValidRpcTypeValueObj(rawObj);
+		
+	// It must be declared as type map.
+	if (rawObj.type !== 'Map')
+		throw new Error(errPrefix + `The object returned by getStackItemFromResult() is not declared as a "Map".`);
+	
+	// Return the array it's carrying.
+	return rawObj.value;
+}
+
+/**
+ * Simple check to see if the given object has a "key" and a "value"
+ * 	field.
+ *
+ * @param {Object} rpcKeyValueObj - The object to inspect.
+ * @param {Boolean} bErrorIfNotValid - If TRUE, then if the object is
+ * 	not valid an error will be thrown, if FALSE then FALSE will be
+ * 	returned instead.
+ *
+ * @return {Boolean} - Returns TRUE if the given object has a "key" and a "value"
+ * 	field.  FALSE if not, or an error will be thrown if bErrorIfNotValid is
+ * 	TRUE.
+ */
+CommonNeonJS.isValidRpcKeyValueObj = function(rpcKeyValueObj, bErrorIfNotValid=true) {
+	let errPrefix = `(CommonNeonJS.isValidRpcKeyValueObj) `;
+	
+	if (!misc_shared_lib.isNonNullObjectAndNotArray(rpcKeyValueObj)) {
+		if (bErrorIfNotValid)
+			throw new Error(errPrefix + `The rpcKeyValueObj is not a valid object.`);
+		else
+			return false;
+	}
+		
+	if (!('key' in rpcKeyValueObj)) {
+		if (bErrorIfNotValid)
+			throw new Error(errPrefix + `The object is missing the "key" field.`);
+		else
+			return false;
+	}
+	
+	if (!('value' in rpcKeyValueObj)) {
+		if (bErrorIfNotValid)
+			throw new Error(errPrefix + `The object is missing the "value" field.`);
+		else
+			return false;
+	}
+
+	return true;
+}
+
+/**
+ * Simple check to see if the given object has a "type" and a "value"
+ * 	field.
+ *
+ * @param {Object} rpcTypeValueObj - The object to inspect.
+ * @param {Boolean} bErrorIfNotValid - If TRUE, then if the object is
+ * 	not valid an error will be thrown, if FALSE then FALSE will be
+ * 	returned instead.
+ *
+ * @return {Boolean} - Returns TRUE if the given object has a "type" and a "value"
+ * 	field.  FALSE if not, or an error will be thrown if bErrorIfNotValid is
+ * 	TRUE.
+ */
+CommonNeonJS.isValidRpcTypeValueObj = function(rpcTypeValueObj, bErrorIfNotValid=true) {
+	let errPrefix = `(CommonNeonJS.isValidRpcTypeValueObj) `;
+	
+	if (!misc_shared_lib.isNonNullObjectAndNotArray(rpcTypeValueObj)) {
+		if (bErrorIfNotValid)
+			throw new Error(errPrefix + `The rpcTypeValueObj is not a valid object.`);
+		else
+			return false;
+	}
+		
+	if (!('type' in rpcTypeValueObj)) {
+		if (bErrorIfNotValid)
+			throw new Error(errPrefix + `The object is missing the "type" field.`);
+		else
+			return false;
+	}
+	
+	if (!('value' in rpcTypeValueObj)) {
+		if (bErrorIfNotValid)
+			throw new Error(errPrefix + `The object is missing the "value" field.`);
+		else
+			return false;
+	}
+
+	return true;
+}
+
+/**
+ * Convert a ByteString value from n encoded RPC value object to a Javascript
+ * 	string.
+ *
+ * @param {Object} rpcTypeValueObj - An RPC encoded object that carries
+ * 	an embedded value.
+ *
+ * 	@return {String} - Returns the correct formal Javascript type given the
+ * 		type that is encoded in the given object.
+ */
+CommonNeonJS.convertRpcByteStringToStr = function(rpcTypeValueObj) {
+	let errPrefix = `(CommonNeonJS.convertRpcByteStringToStr) `;
+	
+	// Validate the object.
+	CommonNeonJS.isValidRpcTypeValueObj(rpcTypeValueObj);
+	
+	// The declared type must be "ByteString".
+	if (rpcTypeValueObj.type !== 'ByteString')
+		throw new Error(errPrefix + `The object is not declared as a "ByteString" container.`);
+		
+	// Decode the value to a string.
+	return CommonNeonJS.getStringValueFromByteStringObj(rpcT)
+	
+}
+
+/**
+ * Convert an encoded RPC value object to the corresponding Javascript
+ * 	type.
+ *
+ * @param {Object} encodedTypeObj - An RPC encoded object that carries
+ * 	an embedded value.
+ *
+ * 	@return {*} - Returns the correct formal Javascript type given the
+ * 		type that is encoded in the given object.
+ */
+CommonNeonJS.convertRpcEncodedTypeToJsType = function(encodedTypeObj) {
+	let errPrefix = `(CommonNeonJS.convertRpcEncodedTypeToJsType) `;
+	
+	// Validate it.
+	CommonNeonJS.isValidRpcTypeValueObj(encodedTypeObj);
+	
+	if (encodedTypeObj.type === 'ByteString')
+		return CommonNeonJS.getStringValueFromByteStringObj(encodedTypeObj);
+	if (encodedTypeObj.type === 'Integer')
+		return parseInt(encodedTypeObj.value);
+	if (encodedTypeObj.type === 'Boolean')
+		return encodedTypeObj.value ? true : false;
+	else
+		throw new Error(errPrefix + `Do not know how to handle an encoded type declared as type: ${encodedTypeObj.type}.`);
+}
+
+/**
+ * Convert a BigInteger value to real number.
+ *
+ * @param {Number} bigInt - A BigInteger value.
+ * @param {Boolean} [bLimitToTwoDecimalPlaces] - If TRUE, then the
+ * 	returned number will be limited to two decimal places.  If
+ * 	FALSE, the number will be returned with its original
+ * 	precision.
+ *
+ * @return {Number} - The number in real number format.
+ */
+CommonNeonJS.bigIntegerToRealNumber = function(bigInt, bLimitToTwoDecimalPlaces=false) {
+	let errPrefix = `(bigIntegerToRealNumber) `;
+	
+	if (typeof bigInt !== 'number')
+		throw new Error(errPrefix + `The value in the bigInt parameter is not a number.`);
+		
+	if (0 === g_BigIntegerMultVal)
+		throw new Error(errPrefix + `g_BigIntegerMultVal is 0.  Stopping due to potential divide by zero operation.`);
+		
+	if (typeof bLimitToTwoDecimalPlaces !== 'boolean')
+		throw new Error(errPrefix + `The value in the bLimitToTwoDecimalPlaces parameter is not boolean.`);
+		
+	const realNumVal = bigInt / g_BigIntegerMultVal;
+	
+	if (bLimitToTwoDecimalPlaces)
+		return limitToTwoDecimalPlaces(realNumVal);
+	else
+		return realNumVal;
+}
+
+/**
+ * Convert a real number to a BigInteger value.
+ *
+ * @param {Number} realNumVal - A real number value.
+ *
+ * @return {Number} - The number in BigInteger number format.
+ */
+CommonNeonJS.realNumberToBigInteger = function(realNumVal) {
+	let errPrefix = `(CommonNeonJS.realNumberToBigInteger) `;
+	
+	if (typeof realNumVal !== 'number')
+		throw new Error(errPrefix + `The value in the realNumVal parameter is not a number.`);
+		
+	const bigInt = Math.trunc(realNumVal * g_BigIntegerMultVal);
+	return bigInt;
+}
+
+
+module.exports = {
+	CommonNeonJS: CommonNeonJS,
+	NeoRpcParameter: NeoRpcParameter
+}

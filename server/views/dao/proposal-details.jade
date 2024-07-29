@@ -1,0 +1,134 @@
+extends ../alpaca-base-layout
+
+block extra_variables
+    -var titleVar = "Proposal Details"
+
+//- Include any stylesheets needed by the page being rendered.
+block extra_css
+
+    // Additional CSS required for jTable.
+    link(rel="stylesheet", href="/stylesheets/normalize/normalize.css")
+    // jTable CSS for the jQuery UI themes.
+    link(rel="stylesheet", href="/stylesheets/jqueryui/themes/jqueryui/jtable_jqueryui.css")
+    // JqueryUI ui-darkness theme.
+    link(rel="stylesheet", href="/stylesheets/jqueryui/themes/ui-darkness/jquery-ui.css")
+    // CSS for jTable highlighting.
+    link(rel='stylesheet', href='/stylesheets/jtable/jtable-highlight.css')
+
+//- Include any additional header javascript files needed by the page being rendered.
+block extra_javascript
+
+    script(type="text/javascript" src="/javascripts/neodao-js/neofs-support.js")
+    script(type="text/javascript" src="/javascripts/neodao-js/greenfinch-helpers.js")
+    script(type="text/javascript" src="/javascripts/jtable/jquery.jtable.js")
+    script(type="text/javascript" src="/javascripts/jtable/jtable-support-client-side.js")
+
+    script(type="text/javascript" src="/javascripts/objects/cryptocurrency-list.js")
+    script(type="text/javascript" src="/javascripts/page-support/proposal-details-page-support.js")
+    script(type="text/javascript" src="/javascripts/select2/js/select2.full.min.js")
+
+    // Auto-clean textarea page elements marked with the "auto-clean-text" class.
+    // script(type="text/javascript" src="/javascripts/autoclean/autoclean.js")
+
+    // Our auto-complete manager module.
+    // script(type="text/javascript", src="/javascripts/autocomplete/autocomplete-manager.js")
+
+block content
+
+    div(class="")
+        // Navigation links.
+        include nav-links
+
+    div(id="top-level-div" class="padded-content-container")
+        div(class="content-container")
+            // This is the DIV that contains the table we use for entering data.
+            table(id="proposal-details-main-table")
+                tbody
+                    // ROW: Select cryptocurrency symbol.
+                    tr(class="hidden-row")
+                        td(class="field-label")
+                            span Default DAO Token
+                        td(id="asset-symbol-td")
+                            // This is select box that lets the user select the desired
+                                cryptocurrency goes.  It will be filled in by select2.
+                            select(id="crypto-symbol-select2-div" class="crypto-symbol-select2")
+                    // ROW: Latest price quote.
+                    tr(class="hidden-row")
+                        td(class="field-label")
+                            span Current Price
+                        td(id="current-asset-price-td")
+                            span(class="current-asset-price") (waiting...)
+                    // Show the proposal summary.
+                    tr
+                        td
+                            // The handlebars template will render the proposal summary fields into this DIV.
+                            div(id="proposal-summary-fields-as-details")
+                    tr
+                        td
+                            input(id="execute-proposal-operation-btn" class="neodao-button btn btn-default" value="DO PROPOSAL")
+
+            // This DIV will contain the Alpaca form where the user will enter the
+            //  DAO data.
+            // div(id="alpaca-form-host-div")
+                // This element is just for reference purposes.  The code that
+                //  creates the Alpaca form will delete and recreate this element.
+                div(id="alpaca-form-div")
+
+    // ------------------------------------ HANDLEBARS TEMPLATES --------------------------------------
+
+    // This template renders a Greenfinch/NeoFS summary object.
+        Works from a NeoFsAsset object.
+    script(id="neofs-attached-asset-template", type="text/x-handlebars-template")
+        div(class="neofs-attached-asset-result borderlist")
+            p
+                // span(class="field-label") Name
+                a(class="neofs-asset-link" href="{{neoFsUrl}}" target="_blank") {{srcFilename}}
+
+    // List proposal details (summary) Handlebars template..
+    script(id="proposal-details-handlebars-template", type="text/x-handlebars-template")
+        table(id="proposal-summary-fields-table")
+            tbody
+                //
+                // tr
+                    td
+                        h2(class="single-line-header-above") {{displayName}}
+                // Proposal summary fields, all in one line.
+                tr(class="")
+                    // td(class="")
+                        span(class="single-line-field-label id-field-label") Proposal ID:
+                        span(class="single-line-field-value id-field-value") {{id}}
+                    td(class="" colspan=4)
+                        div(class="enlarge-header")
+                            span(class="single-line-field-label id-field-label") Belongs to DAO:
+                            a(class="dao-link" href="{{ownerDaoUrl}}" target="_blank")
+                                span(class="single-line-field-value id-field-value") {{ownerDaoDisplayName}}
+
+                tr(class="")
+                    td(class="" colspan=4)
+                        span(class="single-line-field-label") Details:
+                        span(class="single-line-field-value") {{details}}
+                tr(class="")
+                    td(class="")
+                        span(class="single-line-field-label") Loot requested:
+                        span(class="single-line-field-value") {{lootRequested}}
+                    td(class="")
+                        span(class="single-line-field-label") Shares requested:
+                        span(class="single-line-field-value") {{sharesRequested}}
+                    td(class="")
+                        span(class="single-line-field-label") Payment requested:
+                        span(class="single-line-field-value") {{paymentRequested}}
+                    td(class="")
+                        span(class="single-line-field-label") Tribute offered:
+                        span(class="single-line-field-value") {{tributeOffered}}
+                tr(class="spacer")
+                    td(class="spacer")
+                tr(class="")
+                    // Associated NeoFS assets.
+                    td(class="half-top" colspan=4)
+                        img(class="logo-1" src="/images/neo/neofs-small-logo-1.png" alt="NeoFS")
+                        span(class="single-line-field-label id-field-label") Proposal Assets
+                        // h2(class="single-line-field-label id-field-label") Proposal Assets
+                        hr
+                        div(id="neofs-assets-list")
+
+
